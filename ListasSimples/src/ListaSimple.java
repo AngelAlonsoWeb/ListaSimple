@@ -131,30 +131,54 @@ public class ListaSimple{
 
 
     public boolean intercambiarNodos(String nodo1, String nodo2) {
-        Node temp1 = null;
-        Node temp2 = null;
-        Node current = this.top;
+    Node temp1 = null;
+    Node temp2 = null;
+    Node prev1 = null;
+    Node prev2 = null;
+    Node current = this.top;
 
-        while (current != null) {
-            if (temp1 == null && current.name.equals(nodo1)) {
-                temp1 = current;
-            } else if (temp2 == null && current.name.equals(nodo2)) {
-                temp2 = current;
-            }
+    while (current != null) {
+        if (temp1 == null && current.name.equals(nodo1)) {
+            temp1 = current;
+            break;
+        }
+        prev1 = current;
+        current = current.next;
+    }
 
-            current = current.next;
+    current = this.top;
 
-            if (temp1 != null && temp2 != null) {
-                String tempName = temp1.name;
-                temp1.name = temp2.name;
-                temp2.name = tempName;
+    while (current != null) {
+        if (temp2 == null && current.name.equals(nodo2)) {
+            temp2 = current;
+            break;
+        }
+        prev2 = current;
+        current = current.next;
+    }
 
-                return true;
-            }
+    if (temp1 != null && temp2 != null) {
+        if (prev1 == null) {
+            this.top = temp2;
+        } else {
+            prev1.next = temp2;
         }
 
-        return false;
+        if (prev2 == null) {
+            this.top = temp1;
+        } else {
+            prev2.next = temp1;
+        }
+        Node tempNext = temp1.next;
+        temp1.next = temp2.next;
+        temp2.next = tempNext;
+
+        return true;
     }
+
+    return false;
+}
+
 
 
 
